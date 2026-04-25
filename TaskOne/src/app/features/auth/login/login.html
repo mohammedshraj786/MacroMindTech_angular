@@ -1,0 +1,44 @@
+<div class="page">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Macromend Technologies</h2>
+      <p>Enter your credentials to continue</p>
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username"
+          [(ngModel)]="loginData.username" #username="ngModel" required minlength="3" />
+        <span class="error-text" *ngIf="username.invalid && username.touched">
+          <span *ngIf="username.errors?.['required']">Username is required.</span>
+          <span *ngIf="username.errors?.['minlength']">Minimum 3 characters required.</span>
+        </span>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password"
+          [(ngModel)]="loginData.password" #password="ngModel" required minlength="6" />
+        <span class="error-text" *ngIf="password.invalid && password.touched">
+          <span *ngIf="password.errors?.['required']">Password is required.</span>
+          <span *ngIf="password.errors?.['minlength']">Minimum 6 characters required.</span>
+        </span>
+      </div>
+
+      <div class="options">
+        <a href="#" class="forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn" [disabled]="isLoading">
+        {{ isLoading ? 'Signing in...' : 'Sign In' }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
