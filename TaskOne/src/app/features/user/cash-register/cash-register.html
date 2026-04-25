@@ -1,0 +1,47 @@
+<div class="page">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h2>Open Cash Register</h2>
+      <p>Select location and enter opening amount</p>
+    </div>
+
+    <form #cashForm="ngForm" (ngSubmit)="onSubmit(cashForm)" novalidate>
+
+      <div class="field">
+        <label for="location">Location</label>
+        <select id="location" name="location_id" [(ngModel)]="formData.location_id" (ngModelChange)="onLocationChange()"
+          #locationRef="ngModel" required>
+          <option value="">Select Location</option>
+          <option *ngFor="let loc of locations" [value]="loc.location_id">
+            {{ loc.name }} ({{ loc.location_id }})
+          </option>
+        </select>
+        <span class="error-text" *ngIf="locationRef.invalid && locationRef.touched">
+          Please select a location.
+        </span>
+      </div>
+
+      <div class="field">
+        <label for="amount">Opening Amount (SGD)</label>
+        <div class="input-prefix-wrapper">
+          <span class="prefix">$</span>
+          <input type="number" id="amount" name="amount" placeholder="Enter Amount" [(ngModel)]="formData.amount"
+            #amountRef="ngModel" required min="1" />
+        </div>
+        <span class="error-text" *ngIf="amountRef.invalid && amountRef.touched">
+          <span *ngIf="amountRef.errors?.['required']">Amount is required.</span>
+          <span *ngIf="amountRef.errors?.['min']">Amount must be greater than one.</span>
+        </span>
+      </div>
+
+      <button type="submit" class="btn" [disabled]="isLoading">
+        {{ isLoading ? 'Opening Register...' : 'Open Cash Register' }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

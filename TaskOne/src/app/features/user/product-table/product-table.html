@@ -1,0 +1,54 @@
+<div class="page">
+
+  <div class="container">
+
+    <div class="page-header">
+      <div class="header-left">
+        <button class="btn-back" (click)="goBack()">&#8592; Back</button>
+        <div>
+          <h2>Products</h2>
+          <p *ngIf="locationId">Location ID: {{ locationId }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert error" *ngIf="errorMessage">&#10006; {{ errorMessage }}</div>
+
+    <div class="table-wrapper" *ngIf="!isLoading && products.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Barcode</th>
+            <th>Unit</th>
+            <th>Qty Available</th>
+            <th>Selling Price (SGD)</th>
+            <th>Type</th>
+            <th>Tax</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td class="name-cell">{{ product.name }}</td>
+            <td>{{ product.sub_sku }}</td>
+            <td>{{ product.barcode }}</td>
+            <td>{{ product.unit }}</td>
+            <td class="qty-cell">{{ product.qty_available | number:'1.0-0' }}</td>
+            <td class="price-cell">${{ product.selling_price | number:'1.2-2' }}</td>
+            <td><span class="badge" [class.variable]="product.type === 'variable'">{{ product.type }}</span></td>
+            <td>{{ product.tax_type }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty" *ngIf="!isLoading && products.length === 0">
+      No products found for this location.
+    </div>
+
+  </div>
+
+</div>
